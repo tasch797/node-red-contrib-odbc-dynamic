@@ -1,0 +1,68 @@
+<script type="text/x-red" data-template-name="odbc-dynamic">
+
+<div class="form-row">
+  <label for="node-input-connection">
+    <i class="fa fa-cog"></i> Connexion ODBC
+  </label>
+  <input type="config" id="node-input-connection" data-type="odbc-connection">
+</div>
+
+<div class="form-row">
+  <label for="node-input-query">
+    <i class="fa fa-code"></i> Requête SQL
+  </label>
+  <textarea id="node-input-query" rows="5" style="width: 100%;" placeholder="Laisser vide pour utiliser msg.query"></textarea>
+</div>
+
+
+
+
+
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('odbc-dynamic', {
+    category: 'storage',
+    color: '#a6bbcf',
+    defaults: {
+      connection: { type: "odbc-connection" },
+      query: { value: "" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "db.svg",
+    label: function() {
+      return this.name || "ODBC Dynamic";
+    }
+  });
+</script>
+
+
+<script type="text/html" data-help-name="odbc-dynamic">
+  <p><strong>Node-RED pour ODBC</strong></p>
+
+  <h3>🛠️ Configuration requise</h3>
+  <p>
+    Nécessite une configuration d'ODBC au niveau des <code>Sources de données système</code>, via l'<code>Administrateur de source de données ODBC (64 bits)</code>.
+  </p>
+
+  <h3>📥 Entrées attendues</h3>
+  <dl class="message-properties">
+    <dt>DSN<span class="property-type">string</span></dt>
+    <dd>Nom de la source de données ODBC.</dd>
+    <dt>Usager<span class="property-type">string</span></dt>
+    <dd>Nom d'utilisateur pour la connexion.</dd>
+    <dt>Mot de passe<span class="property-type">string</span></dt>
+    <dd>Mot de passe associé au compte utilisateur.</dd>
+    <dt>Requête SQL<span class="property-type">string</span></dt>
+    <dd>Requête SQL à exécuter.</dd>
+	<dd>Si laissé vide, <code>msg.query</code> sera utilisé.</dd>
+  </dl>
+
+  <h3>📤 Sortie générée</h3>
+  <dl class="message-properties">
+    <dt>msg.payload <span class="property-type">object</span></dt>
+    <dd>Résultat de la requête SQL sous forme d’objet.</dd>
+  </dl>
+
+</script>
